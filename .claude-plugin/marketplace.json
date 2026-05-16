@@ -1,0 +1,36 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "yanctab-marketplace",
+  "description": "yanctab marketplace - tools and workflows for development",
+  "version": "1.0.0",
+  "owner": {
+    "name": "yanctab",
+    "email": "claude.ai.chasing245@passmail.net"
+  },
+  "plugins": [
+    {
+      "name": "ywflow",
+      "description": "Repeatable, deterministic development workflow for new projects via a Makefile contract",
+      "source": {
+        "source": "github",
+        "repo": "yanctab/ywflow-claude-plugin"
+      },
+      "version": "2.0.0",
+      "author": {
+        "name": "yanctab"
+      },
+      "category": "development",
+      "repository": "https://github.com/yanctab/ywflow-claude-plugin",
+      "homepage": "https://github.com/yanctab/ywflow-claude-plugin",
+      "license": "MIT",
+      "keywords": [
+        "workflow",
+        "makefile",
+        "rust",
+        "cli",
+        "ci-cd",
+        "scaffold"
+      ]
+    }
+  ]
+}
