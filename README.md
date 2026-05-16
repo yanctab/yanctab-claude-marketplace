@@ -4,127 +4,39 @@ A Claude Code plugin marketplace hosting tools and workflows for development.
 
 ## Available Plugins
 
-- **ywflow** — Repeatable, deterministic development workflow for new projects via a Makefile contract
-  - Stable version from GitHub
-- **ywflow-dev** — Local development version of ywflow
-  - Use during development with local source code
+- **[ywflow](https://github.com/yanctab/ywflow-claude-plugin)** — Repeatable, deterministic development workflow for new projects via a Makefile contract
+- **ywflow-dev** — Local development version of ywflow (for plugin developers)
 
 ## Installation
 
-### Official Installation (Stable Version)
-
-For users who want the stable, released version of plugins:
-
-**Step 1: Add the marketplace**
-
-In Claude Code, run:
+Add the marketplace to Claude Code:
 
 ```
 /plugin marketplace add yanctab/yanctab-claude-marketplace
 ```
 
-**Step 2: Install a plugin**
-
-Once the marketplace is added, install plugins with:
+Then install any plugin:
 
 ```
-/plugin install ywflow@yanctab-marketplace
-```
-
-**Step 3: Reload plugins**
-
-Then reload plugins to pick up the changes:
-
-```
+/plugin install <plugin-name>@yanctab-marketplace
 /reload-plugins
 ```
 
-You'll now have the latest stable version of ywflow installed. To receive updates when new versions are released:
+Refer to each plugin's repository for detailed installation and usage instructions.
 
-```
-/plugin marketplace update yanctab-marketplace
-/reload-plugins
-```
+## About This Marketplace
 
----
+This marketplace aggregates Claude Code plugins built by yanctab. Each plugin has its own repository with complete documentation, issues, and contribution guidelines.
 
-### Local Development Installation
+Visit individual plugin repositories for:
+- Detailed installation instructions
+- Feature documentation
+- Usage examples
+- Troubleshooting and support
 
-For developers who want to test local changes across multiple sessions:
+## License
 
-**Directory Structure**
-
-Clone both repos to the same parent directory:
-
-```bash
-workspace/
-├── yanctab-claude-marketplace/
-└── ywflow-claude-plugin/
-```
-
-This allows the marketplace to find the plugin via relative path.
-
-**Step 1: Clone the repositories**
-
-```bash
-cd ~/workspace
-git clone https://github.com/yanctab/yanctab-claude-marketplace.git
-git clone https://github.com/yanctab/ywflow-claude-plugin.git
-```
-
-**Step 2: Add the local marketplace**
-
-In Claude Code, run:
-
-```
-/plugin marketplace add /path/to/yanctab-claude-marketplace
-```
-
-Note: Use the absolute path to your local marketplace directory, not the GitHub URL.
-
-**Step 3: Install the development version**
-
-```
-/plugin install ywflow-dev@yanctab-marketplace
-/reload-plugins
-```
-
-**Step 4: Test local changes**
-
-Now when you edit files in `ywflow-claude-plugin`, simply reload plugins:
-
-```
-/reload-plugins
-```
-
-Changes are picked up immediately in the same session and persist across sessions.
-
----
-
-### Comparison: Official vs Local Development
-
-| Aspect | Official (ywflow) | Development (ywflow-dev) |
-|--------|-------------------|--------------------------|
-| **Source** | GitHub (released versions) | Local directory |
-| **Version** | Fixed (v2.0.0, v2.0.1, etc.) | Always latest commits |
-| **Updates** | Manual (`/plugin marketplace update`) | Automatic on reload |
-| **Use Case** | End users, stable releases | Plugin developers, testing |
-| **Setup** | Simple: add marketplace, install | Requires cloned repos as siblings |
-| **Directory Structure** | Not required | Both repos in same parent |
-
----
-
-### Workflow Summary
-
-**If you're a user:** Use `ywflow@yanctab-marketplace`
-- Install once
-- Receive stable updates
-- No setup beyond marketplace add
-
-**If you're a plugin developer:** Use `ywflow-dev@yanctab-marketplace`
-- Clone both repos locally
-- Changes are picked up on each `/reload-plugins`
-- Perfect for testing new features before release
+Each plugin in this marketplace has its own license. See individual plugin repositories for details.
 
 ### Usage
 
