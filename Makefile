@@ -10,8 +10,12 @@ help:
 submodules:
 	git submodule update --init plugins/*
 
+## submodules-latest - init and update all plugin submodules to their latest commits
+submodules-latest:
+	git submodule update --init --remote plugins/*
+
 ## install - run install in every local -dev plugin directory
-install: submodules
+install: submodules-latest
 	@jq -r '.plugins[] | select(.name | endswith("-dev")) | select(.source | type == "string") | .source' .claude-plugin/marketplace.json \
 	  | while IFS= read -r dir; do \
 	      $(MAKE) -C "$$dir" install; \
