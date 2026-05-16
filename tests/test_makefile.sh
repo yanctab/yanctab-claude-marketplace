@@ -30,6 +30,16 @@ test_no_remote_flag() {
 
 run_test "submodules target has no --remote flag" "$(test_no_remote_flag; echo $?)"
 
+# Criterion 2: doc comment reads "to their pinned commits" (or equivalent)
+test_doc_comment_pinned_commits() {
+    if grep -q 'pinned commits' "$MAKEFILE"; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "submodules doc comment says pinned commits" "$(test_doc_comment_pinned_commits; echo $?)"
+
 echo ""
 echo "Results: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]
