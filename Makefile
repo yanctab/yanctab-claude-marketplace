@@ -8,4 +8,4 @@ help:
 
 ## submodules - init and update all plugin submodules to their latest remote commits
 submodules:
-	git submodule update --init --remote plugins/*
+	git submodule update --init plugins/*
