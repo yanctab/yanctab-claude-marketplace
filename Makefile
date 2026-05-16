@@ -1,6 +1,6 @@
 # Makefile
 
-.PHONY: submodules help
+.PHONY: submodules help install
 
 ## help - show available targets
 help:
@@ -9,3 +9,10 @@ help:
 ## submodules - init and update all plugin submodules to their pinned commits
 submodules:
 	git submodule update --init plugins/*
+
+## install - run install in every local -dev plugin directory
+install: submodules
+	@jq -r '.plugins[] | select(.name | endswith("-dev")) | select(.source | type == "string") | .source' .claude-plugin/marketplace.json \
+	  | while IFS= read -r dir; do \
+	      $(MAKE) -C "$$dir" install; \
+	    done

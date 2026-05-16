@@ -47,6 +47,90 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 7: ## install - doc comment present so make help lists the target
+test_install_listed_in_make_help() {
+    make -C "$REPO_ROOT" help 2>/dev/null | grep -q 'install'
+}
+
+run_test "make help lists the install target" "$(test_install_listed_in_make_help; echo $?)"
+
+# install Criterion 6: $(MAKE) -C <dir> install is invoked for each qualifying entry
+test_install_invokes_make_c_dir_install() {
+    if grep -A 20 '^install:' "$MAKEFILE" | grep -qE '\$\(MAKE\)[[:space:]]+-C[[:space:]]+.*install'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install invokes \$(MAKE) -C <dir> install for each local -dev entry" "$(test_install_invokes_make_c_dir_install; echo $?)"
+
+# install Criterion 5: when source is a JSON object the entry is skipped (no error)
+test_install_skips_object_source_entries() {
+    # Create a temp JSON with a -dev entry whose source is an object
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    cat > "$tmpdir/marketplace.json" <<'JSONEOF'
+{
+  "plugins": [
+    {
+      "name": "foo-dev",
+      "source": {"type": "github", "repo": "org/foo"}
+    }
+  ]
+}
+JSONEOF
+    # jq with our filter should produce no output (object source skipped) and exit 0
+    local output
+    output=$(jq -r '.plugins[] | select(.name | endswith("-dev")) | select(.source | type == "string") | .source' "$tmpdir/marketplace.json")
+    local exit_code=$?
+    rm -rf "$tmpdir"
+    [ $exit_code -eq 0 ] && [ -z "$output" ]
+}
+
+run_test "install skips object-source entries silently" "$(test_install_skips_object_source_entries; echo $?)"
+
+# install Criterion 4: when source is a plain string, use it as the plugin directory path
+test_install_string_source_used_as_dir() {
+    # The jq filter must check that source is a string (type == "string")
+    if grep -A 20 '^install:' "$MAKEFILE" | grep -q 'type == "string"'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install uses string source as plugin directory path" "$(test_install_string_source_used_as_dir; echo $?)"
+
+# install Criterion 3: only plugins whose name ends in -dev are processed
+test_install_filters_dev_entries() {
+    # The jq filter must select only entries whose name ends with -dev
+    if grep -A 20 '^install:' "$MAKEFILE" | grep -q 'endswith("-dev")'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install filters only -dev-named plugin entries" "$(test_install_filters_dev_entries; echo $?)"
+
+# install Criterion 2: make install depends on submodules
+test_install_depends_on_submodules() {
+    if grep -E '^install[[:space:]]*:' "$MAKEFILE" | grep -q 'submodules'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install target depends on submodules" "$(test_install_depends_on_submodules; echo $?)"
+
+# install Criterion 1: install is listed in the .PHONY declaration
+test_install_in_phony() {
+    if grep -E '^\.PHONY:' "$MAKEFILE" | grep -qw 'install'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install is listed in .PHONY declaration" "$(test_install_in_phony; echo $?)"
+
 echo ""
 echo "Results: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]
