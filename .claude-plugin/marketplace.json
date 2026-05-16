@@ -36,7 +36,7 @@
     {
       "name": "ywflow-dev",
       "description": "ywflow plugin - local development version (tracks latest commits)",
-      "source": "../ywflow-claude-plugin",
+      "source": "./plugins/ywflow-dev",
       "author": {
         "name": "yanctab"
       },
