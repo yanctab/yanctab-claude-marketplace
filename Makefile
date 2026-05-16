@@ -12,3 +12,4 @@ submodules:
 
 ## install - run install in every local -dev plugin directory
 install: submodules
+	@jq -r '.plugins[] | select(.name | endswith("-dev")) | .source' .claude-plugin/marketplace.json

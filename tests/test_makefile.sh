@@ -47,6 +47,17 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 3: only plugins whose name ends in -dev are processed
+test_install_filters_dev_entries() {
+    # The jq filter must select only entries whose name ends with -dev
+    if grep -A 20 '^install:' "$MAKEFILE" | grep -q 'endswith("-dev")'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install filters only -dev-named plugin entries" "$(test_install_filters_dev_entries; echo $?)"
+
 # install Criterion 2: make install depends on submodules
 test_install_depends_on_submodules() {
     if grep -E '^install[[:space:]]*:' "$MAKEFILE" | grep -q 'submodules'; then
