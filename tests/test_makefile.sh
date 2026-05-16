@@ -47,6 +47,16 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 6: $(MAKE) -C <dir> install is invoked for each qualifying entry
+test_install_invokes_make_c_dir_install() {
+    if grep -A 20 '^install:' "$MAKEFILE" | grep -qE '\$\(MAKE\)[[:space:]]+-C[[:space:]]+.*install'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install invokes \$(MAKE) -C <dir> install for each local -dev entry" "$(test_install_invokes_make_c_dir_install; echo $?)"
+
 # install Criterion 5: when source is a JSON object the entry is skipped (no error)
 test_install_skips_object_source_entries() {
     # Create a temp JSON with a -dev entry whose source is an object
