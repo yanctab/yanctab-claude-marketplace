@@ -40,6 +40,13 @@ test_doc_comment_pinned_commits() {
 
 run_test "submodules doc comment says pinned commits" "$(test_doc_comment_pinned_commits; echo $?)"
 
+# Criterion 3: make submodules runs without error
+test_make_submodules_exits_clean() {
+    make -C "$REPO_ROOT" submodules >/dev/null 2>&1
+}
+
+run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
+
 echo ""
 echo "Results: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]
