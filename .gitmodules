@@ -1,0 +1,4 @@
+[submodule "plugins/ywflow-dev"]
+	path = plugins/ywflow-dev
+	url = https://github.com/yanctab/ywflow-claude-plugin
+	branch = main
