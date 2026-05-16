@@ -47,6 +47,31 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 5: when source is a JSON object the entry is skipped (no error)
+test_install_skips_object_source_entries() {
+    # Create a temp JSON with a -dev entry whose source is an object
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    cat > "$tmpdir/marketplace.json" <<'JSONEOF'
+{
+  "plugins": [
+    {
+      "name": "foo-dev",
+      "source": {"type": "github", "repo": "org/foo"}
+    }
+  ]
+}
+JSONEOF
+    # jq with our filter should produce no output (object source skipped) and exit 0
+    local output
+    output=$(jq -r '.plugins[] | select(.name | endswith("-dev")) | select(.source | type == "string") | .source' "$tmpdir/marketplace.json")
+    local exit_code=$?
+    rm -rf "$tmpdir"
+    [ $exit_code -eq 0 ] && [ -z "$output" ]
+}
+
+run_test "install skips object-source entries silently" "$(test_install_skips_object_source_entries; echo $?)"
+
 # install Criterion 4: when source is a plain string, use it as the plugin directory path
 test_install_string_source_used_as_dir() {
     # The jq filter must check that source is a string (type == "string")
