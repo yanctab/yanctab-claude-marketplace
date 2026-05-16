@@ -11,7 +11,11 @@ A Claude Code plugin marketplace hosting tools and workflows for development.
 
 ## Installation
 
-### Add the marketplace
+### Official Installation (Stable Version)
+
+For users who want the stable, released version of plugins:
+
+**Step 1: Add the marketplace**
 
 In Claude Code, run:
 
@@ -19,7 +23,7 @@ In Claude Code, run:
 /plugin marketplace add yanctab/yanctab-claude-marketplace
 ```
 
-### Install a plugin
+**Step 2: Install a plugin**
 
 Once the marketplace is added, install plugins with:
 
@@ -27,40 +31,100 @@ Once the marketplace is added, install plugins with:
 /plugin install ywflow@yanctab-marketplace
 ```
 
+**Step 3: Reload plugins**
+
 Then reload plugins to pick up the changes:
 
 ```
 /reload-plugins
 ```
 
-### Development Installation (Local)
+You'll now have the latest stable version of ywflow installed. To receive updates when new versions are released:
 
-To test local changes to ywflow during development:
+```
+/plugin marketplace update yanctab-marketplace
+/reload-plugins
+```
 
-1. Clone both repos to the same parent directory:
-   ```bash
-   git clone https://github.com/yanctab/yanctab-claude-marketplace.git
-   git clone https://github.com/yanctab/ywflow-claude-plugin.git
-   ```
+---
 
-2. In Claude Code, add the local marketplace:
-   ```
-   /plugin marketplace add /path/to/yanctab-claude-marketplace
-   ```
+### Local Development Installation
 
-3. Install the development version:
-   ```
-   /plugin install ywflow-dev@yanctab-marketplace
-   /reload-plugins
-   ```
+For developers who want to test local changes across multiple sessions:
 
-Now you can edit the local ywflow-claude-plugin and reload plugins to test changes:
+**Directory Structure**
+
+Clone both repos to the same parent directory:
+
+```bash
+workspace/
+├── yanctab-claude-marketplace/
+└── ywflow-claude-plugin/
+```
+
+This allows the marketplace to find the plugin via relative path.
+
+**Step 1: Clone the repositories**
+
+```bash
+cd ~/workspace
+git clone https://github.com/yanctab/yanctab-claude-marketplace.git
+git clone https://github.com/yanctab/ywflow-claude-plugin.git
+```
+
+**Step 2: Add the local marketplace**
+
+In Claude Code, run:
+
+```
+/plugin marketplace add /path/to/yanctab-claude-marketplace
+```
+
+Note: Use the absolute path to your local marketplace directory, not the GitHub URL.
+
+**Step 3: Install the development version**
+
+```
+/plugin install ywflow-dev@yanctab-marketplace
+/reload-plugins
+```
+
+**Step 4: Test local changes**
+
+Now when you edit files in `ywflow-claude-plugin`, simply reload plugins:
 
 ```
 /reload-plugins
 ```
 
-**Note:** The `ywflow-dev` entry uses a relative path (`../ywflow-claude-plugin`), so both repos must be siblings in the same parent directory.
+Changes are picked up immediately in the same session and persist across sessions.
+
+---
+
+### Comparison: Official vs Local Development
+
+| Aspect | Official (ywflow) | Development (ywflow-dev) |
+|--------|-------------------|--------------------------|
+| **Source** | GitHub (released versions) | Local directory |
+| **Version** | Fixed (v2.0.0, v2.0.1, etc.) | Always latest commits |
+| **Updates** | Manual (`/plugin marketplace update`) | Automatic on reload |
+| **Use Case** | End users, stable releases | Plugin developers, testing |
+| **Setup** | Simple: add marketplace, install | Requires cloned repos as siblings |
+| **Directory Structure** | Not required | Both repos in same parent |
+
+---
+
+### Workflow Summary
+
+**If you're a user:** Use `ywflow@yanctab-marketplace`
+- Install once
+- Receive stable updates
+- No setup beyond marketplace add
+
+**If you're a plugin developer:** Use `ywflow-dev@yanctab-marketplace`
+- Clone both repos locally
+- Changes are picked up on each `/reload-plugins`
+- Perfect for testing new features before release
 
 ### Usage
 
