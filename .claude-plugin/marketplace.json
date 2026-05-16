@@ -13,7 +13,8 @@
       "description": "Repeatable, deterministic development workflow for new projects via a Makefile contract",
       "source": {
         "source": "github",
-        "repo": "yanctab/ywflow-claude-plugin"
+        "repo": "yanctab/ywflow-claude-plugin",
+        "ref": "v2.0.0"
       },
       "version": "2.0.0",
       "author": {
@@ -34,9 +35,8 @@
     },
     {
       "name": "ywflow-dev",
-      "description": "ywflow plugin - local development version",
+      "description": "ywflow plugin - local development version (tracks latest commits)",
       "source": "../ywflow-claude-plugin",
-      "version": "2.0.0-dev",
       "author": {
         "name": "yanctab"
       },
