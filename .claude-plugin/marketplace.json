@@ -31,6 +31,22 @@
         "ci-cd",
         "scaffold"
       ]
+    },
+    {
+      "name": "ywflow-dev",
+      "description": "ywflow plugin - local development version",
+      "source": "../ywflow-claude-plugin",
+      "version": "2.0.0-dev",
+      "author": {
+        "name": "yanctab"
+      },
+      "category": "development",
+      "license": "MIT",
+      "keywords": [
+        "workflow",
+        "development",
+        "local"
+      ]
     }
   ]
 }

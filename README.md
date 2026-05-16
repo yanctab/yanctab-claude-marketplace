@@ -5,6 +5,9 @@ A Claude Code plugin marketplace hosting tools and workflows for development.
 ## Available Plugins
 
 - **ywflow** — Repeatable, deterministic development workflow for new projects via a Makefile contract
+  - Stable version from GitHub
+- **ywflow-dev** — Local development version of ywflow
+  - Use during development with local source code
 
 ## Installation
 
@@ -29,6 +32,35 @@ Then reload plugins to pick up the changes:
 ```
 /reload-plugins
 ```
+
+### Development Installation (Local)
+
+To test local changes to ywflow during development:
+
+1. Clone both repos to the same parent directory:
+   ```bash
+   git clone https://github.com/yanctab/yanctab-claude-marketplace.git
+   git clone https://github.com/yanctab/ywflow-claude-plugin.git
+   ```
+
+2. In Claude Code, add the local marketplace:
+   ```
+   /plugin marketplace add /path/to/yanctab-claude-marketplace
+   ```
+
+3. Install the development version:
+   ```
+   /plugin install ywflow-dev@yanctab-marketplace
+   /reload-plugins
+   ```
+
+Now you can edit the local ywflow-claude-plugin and reload plugins to test changes:
+
+```
+/reload-plugins
+```
+
+**Note:** The `ywflow-dev` entry uses a relative path (`../ywflow-claude-plugin`), so both repos must be siblings in the same parent directory.
 
 ### Usage
 
