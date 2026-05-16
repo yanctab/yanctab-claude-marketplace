@@ -64,30 +64,44 @@ To add a new plugin to this marketplace:
 
 1. Create the plugin in its own repository
 2. Ensure it has a `.claude-plugin/plugin.json` manifest
-3. Add an entry to `.claude-plugin/marketplace.json`:
+3. Add entries to `.claude-plugin/marketplace.json`:
+
+**Official/Stable Version:**
 
 ```json
 {
   "name": "plugin-name",
-  "description": "Brief description",
+  "description": "Brief description of the plugin",
   "source": {
     "source": "github",
     "repo": "yanctab/plugin-name",
     "ref": "v1.0.0"
   },
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "author": {
+    "name": "yanctab"
+  },
+  "category": "development",
+  "license": "MIT"
 }
 ```
 
-For local development testing, optionally add a `-dev` variant:
+**Local Development Version (Optional):**
 
 ```json
 {
   "name": "plugin-name-dev",
   "description": "plugin-name - local development version (tracks latest commits)",
-  "source": "../plugin-name"
+  "source": "../plugin-name",
+  "author": {
+    "name": "yanctab"
+  },
+  "category": "development",
+  "license": "MIT"
 }
 ```
+
+Both entries go in the `plugins` array in `.claude-plugin/marketplace.json`.
 
 4. Push the changes to this repository
 
