@@ -47,6 +47,13 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 7: ## install - doc comment present so make help lists the target
+test_install_listed_in_make_help() {
+    make -C "$REPO_ROOT" help 2>/dev/null | grep -q 'install'
+}
+
+run_test "make help lists the install target" "$(test_install_listed_in_make_help; echo $?)"
+
 # install Criterion 6: $(MAKE) -C <dir> install is invoked for each qualifying entry
 test_install_invokes_make_c_dir_install() {
     if grep -A 20 '^install:' "$MAKEFILE" | grep -qE '\$\(MAKE\)[[:space:]]+-C[[:space:]]+.*install'; then
