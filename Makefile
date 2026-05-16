@@ -9,3 +9,6 @@ help:
 ## submodules - init and update all plugin submodules to their pinned commits
 submodules:
 	git submodule update --init plugins/*
+
+## install - run install in every local -dev plugin directory
+install: submodules
