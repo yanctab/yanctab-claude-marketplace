@@ -1,6 +1,6 @@
 # Makefile
 
-.PHONY: submodules help
+.PHONY: submodules help install
 
 ## help - show available targets
 help:

@@ -47,6 +47,16 @@ test_make_submodules_exits_clean() {
 
 run_test "make submodules exits without error" "$(test_make_submodules_exits_clean; echo $?)"
 
+# install Criterion 1: install is listed in the .PHONY declaration
+test_install_in_phony() {
+    if grep -E '^\.PHONY:' "$MAKEFILE" | grep -qw 'install'; then
+        return 0
+    fi
+    return 1
+}
+
+run_test "install is listed in .PHONY declaration" "$(test_install_in_phony; echo $?)"
+
 echo ""
 echo "Results: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]
